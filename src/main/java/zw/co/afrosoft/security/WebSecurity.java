@@ -9,6 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import zw.co.afrosoft.model.User;
 import zw.co.afrosoft.service.UserService;
 
+import static zw.co.afrosoft.security.WebSecurityConstants.SIGN_UP_URL;
+
 
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
@@ -23,7 +25,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
                 http.csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST,"/users")
+                .antMatchers(HttpMethod.POST,SIGN_UP_URL)
                 .permitAll()
                 .anyRequest().authenticated();
     }
