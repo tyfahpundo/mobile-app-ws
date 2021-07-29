@@ -11,6 +11,8 @@ import zw.co.afrosoft.model.User;
 import zw.co.afrosoft.persistence.UserRepository;
 import zw.co.afrosoft.utilities.Utils;
 
+import java.util.ArrayList;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -39,7 +41,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return null;
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = repo.findUserByEmail(email);
+
+        if(user == null) throw new UsernameNotFoundException(email);
+
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getEncryptedPassword(), new ArrayList<>());
     }
 }
